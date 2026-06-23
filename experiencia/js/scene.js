@@ -30,7 +30,7 @@ export function initExperience() {
     window.matchMedia('(max-width: 820px)').matches ||
     /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent);
 
-  const N_BRAIN     = isMobile ? 5000 : 12000;
+  const N_BRAIN     = isMobile ? 6000 : 14000;
   const N_NEURONS   = isMobile ? 800  : 2600;
   const N_PARTICLES = isMobile ? 1200 : 4200;
   const PIXEL_RATIO = Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2);
@@ -100,7 +100,7 @@ export function initExperience() {
     // Cérebro
     brain.uniforms.uOpen.value       = progress;
     brain.uniforms.uGap.value        = GAP;
-    brain.uniforms.uBrightness.value = 0.2 + 0.7 * progress;
+    brain.uniforms.uBrightness.value = 0.45 + 0.5 * progress;
     brain.uniforms.uPulse.value      = 1.0 + 4.0 * progress;
     // Conexões
     neurons.uniforms.uProgress.value   = progress;

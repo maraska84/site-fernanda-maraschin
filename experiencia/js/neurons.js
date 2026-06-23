@@ -1,9 +1,10 @@
 // neurons.js
 // ─────────────────────────────────────────────────────────────────────────────
-// Cria as CONEXÕES NEURAIS como THREE.LineSegments entre pontos reais do cérebro.
-// Cada conexão tem: lado (para acompanhar a abertura), semente (fase do pulso) e
-// limiar (aparece conforme o progresso do scroll). O shader faz pulsar/piscar,
-// dando a sensação de impulsos elétricos que nascem e desaparecem.
+// Conexões neurais ORGÂNICAS (não retas): cada fibra é uma curva (Bézier) entre
+// dois pontos próximos do cérebro, com leve ruído — parece dendrito/axônio.
+// Um IMPULSO elétrico (cabeça de luz) percorre cada fibra (atributo aLineT no shader).
+// Além das fibras, criamos SPARKS/raios curtos saindo da superfície ("raios em volta").
+// Tudo num único LineSegments para performance.
 // ─────────────────────────────────────────────────────────────────────────────
 import * as THREE from 'three';
 import { neuronVertexShader, neuronFragmentShader } from './shaders.js';
@@ -15,70 +16,110 @@ const PALETTE = [
 ];
 
 /**
- * @param {Float32Array} brainPositions  posições dos pontos do cérebro
- * @param {Float32Array} brainSides      lado (-1/+1) de cada ponto
- * @param {number} count                 nº de conexões desejadas
+ * @param {Float32Array} brainPositions
+ * @param {Float32Array} brainSides
+ * @param {number} nFibers  nº de fibras curvas (sparks ≈ 30% disso)
  */
-export function createNeurons(brainPositions, brainSides, count) {
-  const positions  = new Float32Array(count * 2 * 3);
-  const sides      = new Float32Array(count * 2);
-  const seeds      = new Float32Array(count * 2);
-  const thresholds = new Float32Array(count * 2);
-  const colors     = new Float32Array(count * 2 * 3);
+export function createNeurons(brainPositions, brainSides, nFibers) {
+  const nSparks = Math.round(nFibers * 0.3);
+
+  // Arrays dinâmicos (convertidos em Float32Array no fim).
+  const P = [], SIDE = [], SEED = [], THR = [], LT = [], COL = [];
+  const pushSeg = (p1, p2, side, seed, thr, col, t1, t2) => {
+    P.push(p1.x, p1.y, p1.z, p2.x, p2.y, p2.z);
+    SIDE.push(side, side);
+    SEED.push(seed, seed);
+    THR.push(thr, thr);
+    LT.push(t1, t2);
+    COL.push(col.r, col.g, col.b, col.r, col.g, col.b);
+  };
 
   const n = brainPositions.length / 3;
-  const a = new THREE.Vector3();
-  const b = new THREE.Vector3();
+  const a = new THREE.Vector3(), b = new THREE.Vector3(), dir = new THREE.Vector3();
+  const mid = new THREE.Vector3(), ctrl = new THREE.Vector3(), perp = new THREE.Vector3();
+  const up = new THREE.Vector3(), prev = new THREE.Vector3(), cur = new THREE.Vector3();
 
-  let s = 0;          // conexões criadas
-  let attempts = 0;   // trava de segurança
-  while (s < count && attempts < count * 40) {
+  const robustPerp = (d) => {
+    up.set(0, 1, 0);
+    perp.crossVectors(d, up);
+    if (perp.lengthSq() < 1e-6) { up.set(1, 0, 0); perp.crossVectors(d, up); }
+    return perp.normalize();
+  };
+
+  // ── Fibras curvas (neurônios se ligando) ──
+  const K = 6;
+  let made = 0, attempts = 0;
+  while (made < nFibers && attempts < nFibers * 40) {
     attempts++;
-    const i = (Math.random() * n) | 0;
-    const j = (Math.random() * n) | 0;
-    if (i === j) continue;
-    if (brainSides[i] !== brainSides[j]) continue; // mesmo hemisfério
-
+    const i = (Math.random() * n) | 0, j = (Math.random() * n) | 0;
+    if (i === j || brainSides[i] !== brainSides[j]) continue;
     a.set(brainPositions[i * 3], brainPositions[i * 3 + 1], brainPositions[i * 3 + 2]);
     b.set(brainPositions[j * 3], brainPositions[j * 3 + 1], brainPositions[j * 3 + 2]);
-    const dist = a.distanceTo(b);
-    if (dist < 0.08 || dist > 0.55) continue; // só conexões curtas/médias
+    const len = a.distanceTo(b);
+    if (len < 0.08 || len > 0.5) continue;
 
-    const seed = Math.random();
-    const thr  = Math.random();
-    const col  = PALETTE[(Math.random() * PALETTE.length) | 0];
+    dir.subVectors(b, a);
+    robustPerp(dir);
+    mid.addVectors(a, b).multiplyScalar(0.5);
+    const arc = (Math.random() * 2 - 1) * 0.28 * len;     // curvatura do arco
+    ctrl.copy(mid).addScaledVector(perp, arc);
 
-    const p = s * 6;
-    positions[p]     = a.x; positions[p + 1] = a.y; positions[p + 2] = a.z;
-    positions[p + 3] = b.x; positions[p + 4] = b.y; positions[p + 5] = b.z;
+    const seed = Math.random(), thr = Math.random(), col = PALETTE[(Math.random() * 3) | 0];
+    const side = brainSides[i];
 
-    for (const k of [0, 1]) {
-      const v = s * 2 + k;
-      sides[v]      = brainSides[i];
-      seeds[v]      = seed;
-      thresholds[v] = thr;
-      colors[v * 3]     = col.r;
-      colors[v * 3 + 1] = col.g;
-      colors[v * 3 + 2] = col.b;
+    prev.set(0, 0, 0);
+    for (let k = 0; k <= K; k++) {
+      const t = k / K, mt = 1 - t;
+      cur.set(
+        mt * mt * a.x + 2 * mt * t * ctrl.x + t * t * b.x,
+        mt * mt * a.y + 2 * mt * t * ctrl.y + t * t * b.y,
+        mt * mt * a.z + 2 * mt * t * ctrl.z + t * t * b.z
+      );
+      cur.x += (Math.random() - 0.5) * 0.015; // wiggle orgânico
+      cur.y += (Math.random() - 0.5) * 0.015;
+      cur.z += (Math.random() - 0.5) * 0.015;
+      if (k > 0) pushSeg(prev, cur, side, seed, thr, col, (k - 1) / K, k / K);
+      prev.copy(cur);
     }
-    s++;
+    made++;
+  }
+
+  // ── Sparks / raios saindo da superfície ("raios em volta") ──
+  const KS = 3;
+  for (let s = 0; s < nSparks; s++) {
+    const i = (Math.random() * n) | 0;
+    a.set(brainPositions[i * 3], brainPositions[i * 3 + 1], brainPositions[i * 3 + 2]);
+    dir.copy(a).normalize();        // pra fora (cérebro centrado na origem)
+    robustPerp(dir);
+    const L = 0.12 + Math.random() * 0.22;
+    const seed = Math.random(), thr = Math.random() * 0.6, col = PALETTE[(Math.random() * 3) | 0];
+    const side = a.x >= 0 ? 1 : -1;
+
+    prev.copy(a);
+    for (let k = 1; k <= KS; k++) {
+      const t = k / KS;
+      cur.copy(a).addScaledVector(dir, L * t);
+      cur.addScaledVector(perp, (Math.random() - 0.5) * 0.05); // zigue-zague de raio
+      pushSeg(prev, cur, side, seed, thr, col, (k - 1) / KS, k / KS);
+      prev.copy(cur);
+    }
   }
 
   const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position',   new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute('aSide',      new THREE.BufferAttribute(sides, 1));
-  geometry.setAttribute('aSeed',      new THREE.BufferAttribute(seeds, 1));
-  geometry.setAttribute('aThreshold', new THREE.BufferAttribute(thresholds, 1));
-  geometry.setAttribute('aColor',     new THREE.BufferAttribute(colors, 3));
+  geometry.setAttribute('position',   new THREE.BufferAttribute(new Float32Array(P), 3));
+  geometry.setAttribute('aSide',      new THREE.BufferAttribute(new Float32Array(SIDE), 1));
+  geometry.setAttribute('aSeed',      new THREE.BufferAttribute(new Float32Array(SEED), 1));
+  geometry.setAttribute('aThreshold', new THREE.BufferAttribute(new Float32Array(THR), 1));
+  geometry.setAttribute('aLineT',     new THREE.BufferAttribute(new Float32Array(LT), 1));
+  geometry.setAttribute('aColor',     new THREE.BufferAttribute(new Float32Array(COL), 3));
 
   const uniforms = {
     uTime:       { value: 0 },
     uProgress:   { value: 0 },
     uBrightness: { value: 1.0 },
     uOpen:       { value: 0 },
-    uGap:        { value: 0.9 },
+    uGap:        { value: 0.7 },
   };
-
   const material = new THREE.ShaderMaterial({
     uniforms,
     vertexShader: neuronVertexShader,

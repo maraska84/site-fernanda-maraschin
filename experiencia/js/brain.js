@@ -178,7 +178,7 @@ export function createBrainFromPoints(src, count, isMobile) {
     uGap:        { value: 0.7 },
     uPulse:      { value: 1.0 },
     uBrightness: { value: 0.3 },
-    uSize:       { value: isMobile ? 1.3 : 1.6 },
+    uSize:       { value: isMobile ? 1.7 : 2.1 },
     uPixelRatio: { value: Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2) },
   };
 

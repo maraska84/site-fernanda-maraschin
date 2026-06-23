@@ -62,8 +62,8 @@ export const brainFragmentShader = /* glsl */`
     if (d > 0.5) discard;
     float alpha = smoothstep(0.5, 0.0, d);
 
-    vec3 color = vColor * vTwinkle * 1.0;
-    color *= (1.0 - 0.55 * vFog);   // escurece ao fundo = sensação de névoa
+    vec3 color = vColor * vTwinkle * 1.2;
+    color *= (1.0 - 0.30 * vFog);   // escurece ao fundo (névoa mais sutil = cérebro mais aparente)
     gl_FragColor = vec4(color, alpha);
   }
 `;
@@ -72,7 +72,8 @@ export const brainFragmentShader = /* glsl */`
 export const neuronVertexShader = /* glsl */`
   attribute float aSide;
   attribute float aSeed;
-  attribute float aThreshold; // 0..1 — a conexão "nasce" quando uProgress passa daqui
+  attribute float aThreshold; // 0..1 — a fibra "nasce" quando uProgress passa daqui
+  attribute float aLineT;     // 0..1 — posição do vértice AO LONGO da fibra (p/ impulso viajante)
   attribute vec3  aColor;
 
   uniform float uTime;
@@ -90,17 +91,23 @@ export const neuronVertexShader = /* glsl */`
 
     gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
 
-    // Visibilidade progressiva: a conexão aparece conforme o scroll avança.
+    // A fibra aparece conforme o scroll avança.
     float born = smoothstep(aThreshold, aThreshold + 0.08, uProgress);
 
-    // Impulso elétrico: acende e apaga, com fase própria por conexão.
-    float wave  = 0.5 + 0.5 * sin(uTime * (2.0 + aSeed * 3.0) + aSeed * 6.2831853);
-    float pulse = 0.35 + 0.65 * pow(wave, 3.0);
+    // Brilho de base: a fibra/dendrito fica levemente visível (não some por completo).
+    float base = 0.10;
 
-    // Algumas conexões "piscam" (somem e voltam) de forma orgânica.
-    float flicker = step(0.12, 0.5 + 0.5 * sin(uTime * 0.7 + aSeed * 20.0));
+    // IMPULSO ELÉTRICO viajante: uma "cabeça" de luz percorre a fibra (neurônio disparando).
+    float speed = 0.20 + aSeed * 0.6;
+    float head  = fract(uTime * speed + aSeed);
+    float d = abs(aLineT - head);
+    d = min(d, 1.0 - d);                    // distância circular (wrap)
+    float impulse = smoothstep(0.12, 0.0, d) * 1.6;
 
-    vAlpha = born * pulse * flicker * uBrightness;
+    // Cintilação orgânica.
+    float flicker = 0.6 + 0.4 * sin(uTime * 1.3 + aSeed * 15.0);
+
+    vAlpha = born * (base + impulse) * flicker * uBrightness;
     vColor = aColor;
   }
 `;
