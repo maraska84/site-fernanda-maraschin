@@ -1,0 +1,130 @@
+/* brain.css — estilo da experiência imersiva */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital@1&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+body {
+  background: #050505;
+  color: #fff;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Canvas WebGL fixo no fundo, cobrindo a tela toda. */
+#webgl {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 0;
+}
+
+/* Container alto: é ele que gera o scroll (progresso 0→1). */
+#experience {
+  position: relative;
+  z-index: 1;
+}
+
+/* Cada etapa ocupa 120vh → 5 etapas = 600vh de scroll. */
+.stage {
+  height: 120vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 24px;
+  pointer-events: none; /* deixa o scroll/3D passar; só CTA e voltar clicáveis */
+}
+.stage-inner { max-width: 680px; }
+
+.stage .eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #a855f7;
+  margin-bottom: 18px;
+}
+.stage h1 {
+  font-size: clamp(2.4rem, 9vw, 5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.stage h2 {
+  font-size: clamp(1.7rem, 6vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+.stage em {
+  font-style: normal;
+  background: linear-gradient(90deg, #a855f7, #ff00ff, #00d4ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.stage p {
+  margin-top: 16px;
+  color: #b9b9c9;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.6;
+}
+
+.cta {
+  pointer-events: auto;
+  display: inline-block;
+  margin-top: 32px;
+  padding: 16px 32px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #a855f7, #ff00ff);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 44px rgba(168, 85, 247, 0.55);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cta:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(255, 0, 255, 0.6); }
+.back {
+  pointer-events: auto;
+  display: block;
+  margin-top: 22px;
+  color: #8a8a9a;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+.back:hover { color: #00d4ff; }
+
+.scroll-hint {
+  margin-top: 44px;
+  font-size: 1.5rem;
+  color: #a855f7;
+  animation: bounce 1.8s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50%      { transform: translateY(10px); opacity: 1; }
+}
+
+/* Loader inicial */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #050505;
+  color: #a855f7;
+  letter-spacing: 0.12em;
+  font-size: 0.9rem;
+  transition: opacity 0.6s ease;
+}
+#loader.hidden { opacity: 0; pointer-events: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .scroll-hint { animation: none; }
+}

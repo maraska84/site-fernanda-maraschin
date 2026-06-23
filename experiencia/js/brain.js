@@ -1,0 +1,110 @@
+// brain.js
+// ─────────────────────────────────────────────────────────────────────────────
+// Gera o "cérebro" como uma NUVEM DE PONTOS (procedural, sem precisar de .glb).
+// Dois hemisférios (esquerdo/direito) que se afastam no scroll via uOpen.
+// Retorna também o array de posições, reaproveitado por neurons.js para criar
+// as conexões entre pontos reais do cérebro.
+// ─────────────────────────────────────────────────────────────────────────────
+import * as THREE from 'three';
+import { brainVertexShader, brainFragmentShader } from './shaders.js';
+
+// Paleta do projeto.
+const PALETTE = [
+  new THREE.Color('#a855f7'), // roxo
+  new THREE.Color('#ff00ff'), // magenta
+  new THREE.Color('#00d4ff'), // azul elétrico
+];
+
+// Ruído barato baseado em senos — suficiente para simular "rugas" (gyri/sulci).
+function ridgeNoise(x, y, z) {
+  return (
+    Math.sin(x * 1.7 + y * 2.3 + z * 3.1) * 0.5 +
+    Math.sin(x * 4.1 + z * 1.3) * 0.25 +
+    Math.sin(y * 3.3 + z * 2.7) * 0.25
+  );
+}
+
+/**
+ * Cria o cérebro de partículas.
+ * @param {number} count  Número de pontos (reduzido no mobile).
+ * @param {boolean} isMobile
+ */
+export function createBrain(count, isMobile) {
+  const positions = new Float32Array(count * 3);
+  const sides     = new Float32Array(count);
+  const seeds     = new Float32Array(count);
+  const colors    = new Float32Array(count * 3);
+
+  for (let i = 0; i < count; i++) {
+    const side = (i % 2 === 0) ? -1 : 1; // alterna hemisférios
+
+    // Direção aleatória uniforme; forçamos o sinal de X para o hemisfério certo.
+    let x, y, z, len;
+    do {
+      x = Math.random() * 2 - 1;
+      y = Math.random() * 2 - 1;
+      z = Math.random() * 2 - 1;
+      len = Math.hypot(x, y, z);
+    } while (len < 0.2 || len > 1.0);
+    x /= len; y /= len; z /= len;
+    x = Math.abs(x) * side;
+
+    // Elipsoide com proporção de cérebro: alongado em Z, achatado em Y.
+    const rx = 1.0, ry = 0.82, rz = 1.22;
+    const bump = 0.10 * ridgeNoise(x * 3.0, y * 3.0, z * 3.0); // rugas do córtex
+    // ~22% dos pontos ficam no "miolo" (volume interno / conexões internas).
+    const shell = (Math.random() < 0.22) ? (0.45 + Math.random() * 0.4) : (0.92 + bump);
+
+    let px = x * rx * shell;
+    let py = y * ry * shell;
+    let pz = z * rz * shell;
+    py *= 1.0 - 0.15 * Math.max(0.0, pz); // leve queda frontal (mais orgânico)
+    px += side * 0.04;                     // pequeno sulco central inicial
+
+    positions[i * 3]     = px;
+    positions[i * 3 + 1] = py;
+    positions[i * 3 + 2] = pz;
+    sides[i] = side;
+    seeds[i] = Math.random();
+
+    // Cor: gradiente da paleta conforme a altura (y).
+    const t = (py + 1.0) / 2.0;
+    const col = (t < 0.5)
+      ? PALETTE[0].clone().lerp(PALETTE[1], t * 2.0)
+      : PALETTE[1].clone().lerp(PALETTE[2], (t - 0.5) * 2.0);
+    colors[i * 3]     = col.r;
+    colors[i * 3 + 1] = col.g;
+    colors[i * 3 + 2] = col.b;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('aSide',    new THREE.BufferAttribute(sides, 1));
+  geometry.setAttribute('aSeed',    new THREE.BufferAttribute(seeds, 1));
+  geometry.setAttribute('aColor',   new THREE.BufferAttribute(colors, 3));
+
+  const uniforms = {
+    uTime:       { value: 0 },
+    uOpen:       { value: 0 },
+    uGap:        { value: 0.9 },
+    uPulse:      { value: 1.0 },
+    uBrightness: { value: 0.3 },
+    uSize:       { value: isMobile ? 1.2 : 1.4 },
+    uPixelRatio: { value: Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2) },
+  };
+
+  const material = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: brainVertexShader,
+    fragmentShader: brainFragmentShader,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  });
+
+  const points = new THREE.Points(geometry, material);
+  points.frustumCulled = false; // evita sumiço ao abrir os hemisférios
+
+  // Expomos positions/sides para os neurônios reaproveitarem.
+  return { points, uniforms, positions, sides };
+}

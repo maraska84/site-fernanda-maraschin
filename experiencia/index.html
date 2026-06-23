@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Mente em Expansão | Fernanda Maraschin</title>
+<meta name="description" content="Uma experiência imersiva em 3D sobre o desenvolvimento da mente — Hipnoterapia, Reiki e PNL com Fernanda Maraschin.">
+<meta name="theme-color" content="#050505">
+<link rel="canonical" href="https://maraska84.github.io/site-fernanda-maraschin/experiencia/">
+<link rel="icon" href="data:image/svg+xml,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'&gt;&lt;text y='.9em' font-size='90'&gt;🧠&lt;/text&gt;&lt;/svg&gt;">
+<link rel="stylesheet" href="css/brain.css">
+
+<!-- GSAP + ScrollTrigger (globais: window.gsap / window.ScrollTrigger) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+<!-- Three.js + addons via importmap (ES Modules, sem build/npm) -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+  <!-- Camada WebGL (fixa no fundo) -->
+  <canvas id="webgl"></canvas>
+
+  <!-- Loader inicial -->
+  <div id="loader"><span>Carregando a experiência…</span></div>
+
+  <!-- Container alto: cada .stage gera o scroll que controla o cérebro -->
+  <main id="experience">
+    <section class="stage">
+      <div class="stage-inner">
+        <span class="eyebrow">Neurociência · Hipnoterapia</span>
+        <h1>A mente em <em>expansão</em></h1>
+        <p>Role para despertar o seu potencial.</p>
+        <div class="scroll-hint">↓</div>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="stage-inner">
+        <h2>Toda transformação começa <em>por dentro</em></h2>
+        <p>Crenças, memórias e padrões moldam quem você é — e podem ser ressignificados.</p>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="stage-inner">
+        <h2>Novas <em>conexões</em></h2>
+        <p>A cada sessão, a mente reorganiza caminhos e abre novas possibilidades.</p>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="stage-inner">
+        <h2>Impulsos que <em>iluminam</em></h2>
+        <p>Hipnose, PNL e Reiki ativando a sua melhor versão.</p>
+      </div>
+    </section>
+
+    <section class="stage">
+      <div class="stage-inner">
+        <h2>Uma mente <em>plena</em></h2>
+        <p>Viva em ressonância com seus sonhos.</p>
+        <a class="cta" href="https://wa.me/5551993996196?text=Olá+Fernanda!+Vi+a+experiência+e+gostaria+de+agendar+uma+sessão." target="_blank" rel="noopener">Agendar pelo WhatsApp</a>
+        <a class="back" href="../">← Voltar ao site principal</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- Ponto de entrada (ES Module) -->
+  <script type="module">
+    import { initExperience } from './js/scene.js';
+
+    window.addEventListener('load', () => {
+      try {
+        initExperience();
+        const loader = document.getElementById('loader');
+        // dá um instante para o primeiro frame antes de revelar
+        setTimeout(() => loader.classList.add('hidden'), 400);
+      } catch (e) {
+        console.error('Falha ao iniciar a experiência 3D:', e);
+        document.getElementById('loader').innerHTML =
+          '<span>Seu navegador não suporta esta experiência 3D. Tente um navegador atualizado no desktop.</span>';
+      }
+    });
+  </script>
+</body>
+</html>
