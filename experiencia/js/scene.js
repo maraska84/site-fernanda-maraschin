@@ -18,6 +18,7 @@ import { OutputPass }      from 'three/addons/postprocessing/OutputPass.js';
 import { createBrain, createBrainFromPoints } from './brain.js';
 import { createNeurons }   from './neurons.js';
 import { createParticles } from './particles.js';
+import { createFigure }    from './figure.js';
 import { initScroll }      from './scroll.js';
 
 const GAP = 0.7; // distância de abertura dos hemisférios (ajustada para o modelo real)
@@ -52,6 +53,10 @@ export function initExperience() {
 
   const group = new THREE.Group(); // recebe a rotação contínua do cérebro
   scene.add(group);
+
+  // Silhueta humana luminosa no centro — fora do grupo (não gira), revelada pelo scroll.
+  const figure = createFigure();
+  scene.add(figure.mesh);
 
   // ─── Pós-processamento: Bloom ───
   const composer = new EffectComposer(renderer);
@@ -95,6 +100,12 @@ export function initExperience() {
     camera.position.y = Math.sin(progress * Math.PI) * 0.4;
     camera.lookAt(0, 0, 0);
 
+    // Silhueta: surge entre ~35% e ~75% do scroll e cresce levemente.
+    const reveal = Math.min(1, Math.max(0, (progress - 0.35) / 0.4));
+    figure.uniforms.uReveal.value = reveal;
+    const fs = 0.9 + 0.1 * reveal;
+    figure.mesh.scale.set(fs, fs, fs);
+
     if (!brain) return;
 
     // Cérebro
@@ -122,6 +133,10 @@ export function initExperience() {
     const t = clock.getElapsedTime();
     smoothProgress += (targetProgress - smoothProgress) * 0.08;
     applyProgress(smoothProgress);
+
+    // Silhueta: tempo (pulso) + billboard (sempre de frente p/ a câmera).
+    figure.uniforms.uTime.value = t;
+    figure.mesh.lookAt(camera.position);
 
     if (brain) {
       brain.uniforms.uTime.value     = t;
