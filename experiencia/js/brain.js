@@ -108,3 +108,90 @@ export function createBrain(count, isMobile) {
   // Expomos positions/sides para os neurônios reaproveitarem.
   return { points, uniforms, positions, sides };
 }
+
+/**
+ * Cria o cérebro a partir de uma NUVEM DE PONTOS REAL (assada do modelo .glb).
+ * Recebe um array plano [x,y,z, x,y,z, ...] já centralizado e escalado.
+ * Mantém exatamente o mesmo material/shader do cérebro procedural, então
+ * abertura, brilho, pulso e bloom continuam funcionando igual.
+ * @param {number[]|Float32Array} src  posições assadas
+ * @param {number} count               nº de pontos a usar (subamostra se preciso)
+ * @param {boolean} isMobile
+ */
+export function createBrainFromPoints(src, count, isMobile) {
+  const available = Math.floor(src.length / 3);
+  const n = Math.min(count, available);
+
+  // Subamostragem aleatória (ex.: mobile usa menos pontos do mesmo modelo).
+  let indices;
+  if (n < available) {
+    indices = Array.from({ length: available }, (_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = (Math.random() * (i + 1)) | 0;
+      const t = indices[i]; indices[i] = indices[j]; indices[j] = t;
+    }
+    indices = indices.slice(0, n);
+  } else {
+    indices = Array.from({ length: n }, (_, i) => i);
+  }
+
+  const positions = new Float32Array(n * 3);
+  const sides     = new Float32Array(n);
+  const seeds     = new Float32Array(n);
+  const colors    = new Float32Array(n * 3);
+
+  // Faixa de altura (y) para o gradiente de cor.
+  let minY = Infinity, maxY = -Infinity;
+  for (const idx of indices) {
+    const y = src[idx * 3 + 1];
+    if (y < minY) minY = y;
+    if (y > maxY) maxY = y;
+  }
+  const spanY = Math.max(0.0001, maxY - minY);
+
+  for (let k = 0; k < n; k++) {
+    const idx = indices[k];
+    const x = src[idx * 3], y = src[idx * 3 + 1], z = src[idx * 3 + 2];
+    positions[k * 3] = x;
+    positions[k * 3 + 1] = y;
+    positions[k * 3 + 2] = z;
+
+    sides[k] = (x >= 0) ? 1 : -1;   // hemisfério pelo sinal de X
+    seeds[k] = Math.random();
+
+    const t = (y - minY) / spanY;
+    const col = (t < 0.5)
+      ? PALETTE[0].clone().lerp(PALETTE[1], t * 2.0)
+      : PALETTE[1].clone().lerp(PALETTE[2], (t - 0.5) * 2.0);
+    colors[k * 3] = col.r; colors[k * 3 + 1] = col.g; colors[k * 3 + 2] = col.b;
+  }
+
+  const geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('aSide',    new THREE.BufferAttribute(sides, 1));
+  geometry.setAttribute('aSeed',    new THREE.BufferAttribute(seeds, 1));
+  geometry.setAttribute('aColor',   new THREE.BufferAttribute(colors, 3));
+
+  const uniforms = {
+    uTime:       { value: 0 },
+    uOpen:       { value: 0 },
+    uGap:        { value: 0.7 },
+    uPulse:      { value: 1.0 },
+    uBrightness: { value: 0.3 },
+    uSize:       { value: isMobile ? 1.3 : 1.6 },
+    uPixelRatio: { value: Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2) },
+  };
+
+  const material = new THREE.ShaderMaterial({
+    uniforms,
+    vertexShader: brainVertexShader,
+    fragmentShader: brainFragmentShader,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  });
+
+  const points = new THREE.Points(geometry, material);
+  points.frustumCulled = false;
+  return { points, uniforms, positions, sides };
+}
