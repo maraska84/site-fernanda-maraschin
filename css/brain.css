@@ -124,6 +124,28 @@ body {
 }
 #loader.hidden { opacity: 0; pointer-events: none; }
 
+/* Última etapa: texto na parte de baixo da tela (silhueta fica visível acima). */
+.stage:last-child { align-items: flex-end; padding-bottom: 7vh; }
+
+/* Atalho fixo "Ir para o site" */
+#skip {
+  position: fixed;
+  top: 20px; right: 22px;
+  z-index: 6;
+  color: #b9b9c9;
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  padding: 9px 16px;
+  border: 1px solid rgba(168, 85, 247, 0.45);
+  border-radius: 999px;
+  background: rgba(5, 5, 5, 0.4);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+#skip:hover { color: #fff; border-color: #a855f7; background: rgba(168, 85, 247, 0.2); }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .scroll-hint { animation: none; }
