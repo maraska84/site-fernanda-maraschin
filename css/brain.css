@@ -146,6 +146,24 @@ body {
 }
 #skip:hover { color: #fff; border-color: #a855f7; background: rgba(168, 85, 247, 0.2); }
 
+/* Botão flutuante de música de fundo */
+#bgm-toggle {
+  position: fixed;
+  left: 20px; bottom: 20px;
+  z-index: 6;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  background: rgba(5, 5, 5, 0.5);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s, border-color 0.2s;
+}
+#bgm-toggle:hover { transform: scale(1.08); border-color: #a855f7; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .scroll-hint { animation: none; }

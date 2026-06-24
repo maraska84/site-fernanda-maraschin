@@ -69,6 +69,26 @@
   <!-- Atalho para o site da terapeuta (útil no mobile / quem só quer agendar) -->
   <a id="skip" href="perfil/">Ir para o site &rarr;</a>
 
+  <!-- MÚSICA DE FUNDO -->
+  <audio id="bgm" src="assets/musica-fundo.mp3" loop preload="auto"></audio>
+  <button id="bgm-toggle" aria-label="Música de fundo">🔊</button>
+  <script>
+  (function(){
+    var a=document.getElementById('bgm'), b=document.getElementById('bgm-toggle');
+    if(!a||!b) return;
+    a.volume=0.3;
+    function icon(){ b.textContent = a.paused ? '🔇' : '🔊'; }
+    function tryStart(){ if(localStorage.getItem('bgmOn')!=='false'){ a.play().then(icon).catch(function(){}); } }
+    function tryAuto(e){ if(e.target&&e.target.closest&&e.target.closest('#bgm-toggle'))return; if(localStorage.getItem('bgmOn')==='false'||!a.paused)return; a.play().then(icon).catch(function(){}); }
+    ['click','keydown','touchstart','wheel'].forEach(function(ev){ document.addEventListener(ev, tryAuto, {passive:true}); });
+    b.addEventListener('click', function(){
+      if(a.paused){ localStorage.setItem('bgmOn','true'); a.play().then(icon).catch(function(){}); }
+      else { localStorage.setItem('bgmOn','false'); a.pause(); icon(); }
+    });
+    tryStart(); icon();
+  })();
+  </script>
+
   <!-- Loader inicial -->
   <div id="loader"><span>Carregando a experiência…</span></div>
 

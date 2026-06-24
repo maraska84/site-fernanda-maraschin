@@ -57,17 +57,17 @@
   *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
   :root {
-    --black: #080810;
-    --deep: #10102A;
-    --purple: #1E1040;
-    --gold: #C8933A;
-    --gold-light: #E8B55A;
-    --gold-dim: rgba(200,147,58,0.15);
+    --black: #050505;
+    --deep: #120a24;
+    --purple: #1c0f33;
+    --gold: #a855f7;
+    --gold-light: #d08bff;
+    --gold-dim: rgba(168,85,247,0.15);
     --cream: #F5F0E8;
     --white: #FFFFFF;
     --gray: #8A8A9A;
     --gray-light: #BBBBC8;
-    --border: rgba(200,147,58,0.2);
+    --border: rgba(168,85,247,0.2);
     --nav-h: 60px;
   }
 
@@ -94,7 +94,7 @@
     background: rgba(8,8,16,0.95);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(200,147,58,0.12);
+    border-bottom: 1px solid rgba(168,85,247,0.12);
   }
 
   .nav-logo {
@@ -205,7 +205,7 @@
     color: var(--cream);
     text-decoration: none;
     font-size: 1rem;
-    border-bottom: 1px solid rgba(200,147,58,0.07);
+    border-bottom: 1px solid rgba(168,85,247,0.07);
     transition: color 0.2s, background 0.2s;
     min-height: 52px;
   }
@@ -259,7 +259,7 @@
     position: absolute;
     inset: 0;
     background: radial-gradient(ellipse 100% 60% at 50% 30%, rgba(45,27,78,0.65) 0%, transparent 70%),
-                radial-gradient(ellipse 60% 50% at 10% 90%, rgba(200,147,58,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 10% 90%, rgba(168,85,247,0.06) 0%, transparent 60%),
                 var(--black);
   }
 
@@ -271,7 +271,7 @@
     left: 50%;
     top: 50%;
     margin: -150px 0 0 -150px;
-    background: radial-gradient(circle, rgba(200,147,58,0.16) 0%, rgba(100,60,180,0.12) 40%, transparent 70%);
+    background: radial-gradient(circle, rgba(168,85,247,0.16) 0%, rgba(100,60,180,0.12) 40%, transparent 70%);
     animation: pulse-orb 6s ease-in-out infinite;
     pointer-events: none;
     z-index: 1;
@@ -281,7 +281,7 @@
     position: absolute;
     inset: 24px;
     border-radius: 50%;
-    border: 1px solid rgba(200,147,58,0.14);
+    border: 1px solid rgba(168,85,247,0.14);
     animation: rotate-ring 20s linear infinite;
   }
   .orb::after {
@@ -289,7 +289,7 @@
     position: absolute;
     inset: 70px;
     border-radius: 50%;
-    border: 1px solid rgba(200,147,58,0.07);
+    border: 1px solid rgba(168,85,247,0.07);
     animation: rotate-ring 30s linear infinite reverse;
   }
 
@@ -322,8 +322,8 @@
     height: 210px;
     border-radius: 50%;
     overflow: hidden;
-    border: 1px solid rgba(200,147,58,0.45);
-    box-shadow: 0 0 0 6px rgba(200,147,58,0.05), 0 22px 50px rgba(0,0,0,0.55);
+    border: 1px solid rgba(168,85,247,0.45);
+    box-shadow: 0 0 0 6px rgba(168,85,247,0.05), 0 22px 50px rgba(0,0,0,0.55);
   }
   .hero-photo {
     width: 100%; height: 100%;
@@ -337,8 +337,8 @@
     width: 252px; height: 252px;
     margin: -126px 0 0 -126px;
     border-radius: 50%;
-    border: 1px solid rgba(200,147,58,0.14);
-    border-top-color: rgba(200,147,58,0.55);
+    border: 1px solid rgba(168,85,247,0.14);
+    border-top-color: rgba(168,85,247,0.55);
     animation: rotate-ring 16s linear infinite;
     pointer-events: none;
     z-index: 1;
@@ -430,7 +430,7 @@
     letter-spacing: 0.04em;
     text-decoration: none;
     padding: 14px 0;
-    border-bottom: 1px solid rgba(200,147,58,0.4);
+    border-bottom: 1px solid rgba(168,85,247,0.4);
     transition: color 0.2s;
     display: inline-block;
     min-height: 48px;
@@ -517,7 +517,7 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 30% 30%, rgba(200,147,58,0.15), transparent 60%);
+    background: radial-gradient(ellipse at 30% 30%, rgba(168,85,247,0.15), transparent 60%);
   }
   .about-photo {
     position: relative;
@@ -582,7 +582,7 @@
     transform-origin: left;
     transition: transform 0.3s ease;
   }
-  .service-card:active { background: rgba(200,147,58,0.04); }
+  .service-card:active { background: rgba(168,85,247,0.04); }
   .service-card:active::before { transform: scaleX(1); }
 
   .service-header { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
@@ -620,7 +620,7 @@
     font-size: 0.74rem;
     color: var(--gray-light);
     text-decoration: none;
-    border-bottom: 1px solid rgba(200,147,58,0.28);
+    border-bottom: 1px solid rgba(168,85,247,0.28);
     padding-bottom: 3px;
     min-height: 40px;
     transition: color 0.2s, border-color 0.2s;
@@ -667,7 +667,7 @@
   .step-num {
     font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
-    color: rgba(200,147,58,0.22);
+    color: rgba(168,85,247,0.22);
     font-weight: 700;
     line-height: 1;
     padding-top: 2px;
@@ -832,7 +832,7 @@
     position: absolute;
     width: 500px; height: 500px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(200,147,58,0.07) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(168,85,247,0.07) 0%, transparent 70%);
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
@@ -1003,7 +1003,7 @@
     max-width: 480px;
     aspect-ratio: 1 / 1;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(200,147,58,0.07) 0%, rgba(100,60,180,0.05) 45%, transparent 72%);
+    background: radial-gradient(circle, rgba(168,85,247,0.07) 0%, rgba(100,60,180,0.05) 45%, transparent 72%);
     animation: glow-drift 16s ease-in-out infinite;
   }
   @keyframes glow-drift {
@@ -1026,9 +1026,55 @@
     .sfx { display: none !important; }
     * { transition-duration: 0.01ms !important; }
   }
+
+  /* Destaques com gradiente roxo→magenta→azul (igual à experiência) */
+  .hero-title em, .section-title em, .cta-title em {
+    background: linear-gradient(90deg, #a855f7, #ff00ff, #00d4ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Botão flutuante de música de fundo */
+  #bgm-toggle {
+    position: fixed;
+    left: 20px; bottom: 20px;
+    z-index: 160;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(168,85,247,0.5);
+    background: rgba(5,5,5,0.5);
+    color: #fff;
+    font-size: 1.1rem;
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  #bgm-toggle:hover { transform: scale(1.08); border-color: #a855f7; }
 </style>
 </head>
 <body>
+
+<!-- MÚSICA DE FUNDO -->
+<audio id="bgm" src="../assets/musica-fundo.mp3" loop preload="auto"></audio>
+<button id="bgm-toggle" aria-label="Música de fundo">🔊</button>
+<script>
+(function(){
+  var a=document.getElementById('bgm'), b=document.getElementById('bgm-toggle');
+  if(!a||!b) return;
+  a.volume=0.3;
+  function icon(){ b.textContent = a.paused ? '🔇' : '🔊'; }
+  function tryStart(){ if(localStorage.getItem('bgmOn')!=='false'){ a.play().then(icon).catch(function(){}); } }
+  function tryAuto(e){ if(e.target&&e.target.closest&&e.target.closest('#bgm-toggle'))return; if(localStorage.getItem('bgmOn')==='false'||!a.paused)return; a.play().then(icon).catch(function(){}); }
+  ['click','keydown','touchstart','wheel'].forEach(function(ev){ document.addEventListener(ev, tryAuto, {passive:true}); });
+  b.addEventListener('click', function(){
+    if(a.paused){ localStorage.setItem('bgmOn','true'); a.play().then(icon).catch(function(){}); }
+    else { localStorage.setItem('bgmOn','false'); a.pause(); icon(); }
+  });
+  tryStart(); icon();
+})();
+</script>
 
 <!-- SCROLL PROGRESS -->
 <div class="scroll-progress" id="scrollProgress"></div>
