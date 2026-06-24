@@ -21,7 +21,7 @@ import { createParticles } from './particles.js';
 import { createFigure }    from './figure.js';
 import { initScroll }      from './scroll.js';
 
-const GAP = 0.7; // distância de abertura dos hemisférios (ajustada para o modelo real)
+const GAP = 0.85; // distância de abertura dos hemisférios (divisão clara no fim)
 
 export function initExperience() {
   const canvas = document.getElementById('webgl');
@@ -142,8 +142,11 @@ export function initExperience() {
       brain.uniforms.uTime.value     = t;
       neurons.uniforms.uTime.value   = t;
       particles.uniforms.uTime.value = t;
-      group.rotation.y = t * 0.08 + smoothProgress * 0.6;
-      group.rotation.x = Math.sin(t * 0.1) * 0.05;
+      // A rotação "acalma" conforme chega ao fim: no 100% o cérebro fica de
+      // FRENTE, com a divisão dos hemisférios centralizada na tela.
+      const calm = 1.0 - smoothProgress;
+      group.rotation.y = Math.sin(t * 0.15) * 0.30 * calm;
+      group.rotation.x = Math.sin(t * 0.10) * 0.05 * calm;
       particles.points.rotation.y = -t * 0.02;
     }
 
