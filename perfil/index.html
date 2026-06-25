@@ -553,6 +553,19 @@
     flex-shrink: 0;
   }
 
+  /* ── APRESENTAÇÃO (vídeo) ── */
+  #apresentacao { background: var(--deep); }
+  .video-wrap { margin-top: 36px; display: flex; justify-content: center; }
+  .video-apres {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: 0 0 60px rgba(168,85,247,0.3);
+    background: #000;
+    display: block;
+  }
+
   /* ── SERVIÇOS ── */
   #servicos { background: var(--black); }
 
@@ -1084,6 +1097,7 @@
   <a href="#hero" class="nav-logo">Fernanda <span>Maraschin</span></a>
   <ul class="nav-links">
     <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#apresentacao">Apresentação</a></li>
     <li><a href="#servicos">Terapias</a></li>
     <li><a href="#processo">Como Funciona</a></li>
     <li><a href="#depoimentos">Depoimentos</a></li>
@@ -1103,6 +1117,7 @@
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobile-menu" role="navigation">
   <a href="#sobre" class="mob-link">Sobre Fernanda</a>
+  <a href="#apresentacao" class="mob-link">Apresentação</a>
   <a href="#servicos" class="mob-link">Terapias & Serviços</a>
   <a href="#processo" class="mob-link">Como Funciona</a>
   <a href="#depoimentos" class="mob-link">Depoimentos</a>
@@ -1204,6 +1219,21 @@
           <div class="credential-item"><div class="credential-dot"></div><span>Ho'ponopono · Radiestesia · Hipnose Não Verbal Nível 3</span></div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- APRESENTAÇÃO -->
+<section id="apresentacao">
+  <div class="container">
+    <div class="section-eyebrow">Apresentação</div>
+    <h2 class="section-title">Conheça meu <em>trabalho</em></h2>
+    <div class="divider"></div>
+    <div class="video-wrap">
+      <video class="video-apres" controls playsinline preload="none" poster="../assets/apresentacao-poster.jpg">
+        <source src="../assets/apresentacao.mp4" type="video/mp4">
+        Seu navegador não suporta vídeo.
+      </video>
     </div>
   </div>
 </section>
