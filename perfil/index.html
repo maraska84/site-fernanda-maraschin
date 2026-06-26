@@ -528,8 +528,8 @@
     object-position: center top;
   }
 
-  /* Vídeo de apresentação no lugar da foto (vertical 9:16) */
-  .about-video {
+  /* Vídeo de apresentação (capa = foto da Fernanda; clique = play) */
+  .about-video-wrap {
     position: relative;
     z-index: 1;
     display: block;
@@ -537,12 +537,34 @@
     width: 100%;
     max-width: 300px;
     aspect-ratio: 9 / 16;
-    object-fit: cover;
     border-radius: 16px;
+    overflow: hidden;
     border: 1px solid var(--border);
     box-shadow: 0 0 55px rgba(168,85,247,0.3);
     background: #000;
   }
+  .about-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .video-cover {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    padding: 0; border: none; cursor: pointer;
+    background: #000;
+    display: block;
+  }
+  .video-cover-img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+  .video-play-icon {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    width: 66px; height: 66px;
+    border-radius: 50%;
+    background: rgba(168,85,247,0.88);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; padding-left: 4px;
+    box-shadow: 0 0 34px rgba(168,85,247,0.6);
+    transition: transform 0.2s, background 0.2s;
+  }
+  .video-cover:hover .video-play-icon { transform: translate(-50%, -50%) scale(1.08); background: #a855f7; }
 
   .about-text p {
     color: var(--gray-light);
@@ -662,20 +684,18 @@
   .transform-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 14px;
     margin-top: 40px;
-    border: 1px solid var(--border);
   }
   .transform-item {
-    padding: 0;
     overflow: hidden;
-    border-right: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
+    border: 1px solid var(--border);
+    border-radius: 14px;
     text-align: center;
-    transition: background 0.2s;
+    background: rgba(255,255,255,0.015);
+    transition: transform 0.2s, border-color 0.2s;
   }
-  .transform-item:nth-child(even) { border-right: none; }
-  .transform-item:nth-last-child(-n+2) { border-bottom: none; }
-  .transform-item:active { background: var(--gold-dim); }
+  .transform-item:hover { transform: translateY(-3px); border-color: rgba(168,85,247,0.5); }
 
   .transform-photo {
     width: 100%;
@@ -684,10 +704,9 @@
     display: block;
     filter: saturate(0.9) brightness(0.9);
   }
-  .transform-body { padding: 20px 18px 24px; }
-  .transform-emoji { font-size: 1.4rem; margin-bottom: 8px; display: block; }
-  .transform-label { font-size: 0.85rem; color: var(--cream); line-height: 1.4; font-weight: 500; margin-bottom: 7px; }
-  .transform-example { font-size: 0.72rem; color: var(--gray); line-height: 1.55; }
+  .transform-body { padding: 18px 16px 22px; }
+  .transform-label { font-size: 0.9rem; color: var(--cream); line-height: 1.4; font-weight: 500; margin-bottom: 8px; }
+  .transform-example { font-size: 0.74rem; color: var(--gray); line-height: 1.55; }
 
   /* ── PROCESSO ── */
   #processo { background: var(--black); }
@@ -995,11 +1014,7 @@
     .service-icon { margin-bottom: 16px; }
     .service-title { font-size: 1.3rem; }
 
-    .transform-grid { grid-template-columns: repeat(4, 1fr); }
-    .transform-item { border-right: 1px solid var(--border); border-bottom: none; }
-    .transform-item:nth-child(even) { border-right: 1px solid var(--border); }
-    .transform-item:last-child { border-right: none; }
-    .transform-item:nth-last-child(-n+2) { border-bottom: none; }
+    .transform-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; }
 
     .testimonials-scroll { overflow: visible; display: grid; grid-template-columns: repeat(3, 1fr); }
     .testimonial-card { flex: none; max-width: none; }
@@ -1221,10 +1236,16 @@
   <div class="container">
     <div class="about-grid">
       <div class="about-photo-wrap">
-        <video class="about-video" controls playsinline preload="none" poster="../assets/apresentacao-poster.jpg">
-          <source src="../assets/apresentacao.mp4" type="video/mp4">
-          Seu navegador não suporta vídeo.
-        </video>
+        <div class="about-video-wrap" id="apresVideo">
+          <video class="about-video" playsinline preload="none">
+            <source src="../assets/apresentacao.mp4" type="video/mp4">
+            Seu navegador não suporta vídeo.
+          </video>
+          <button class="video-cover" aria-label="Reproduzir vídeo de apresentação">
+            <img class="video-cover-img" src="foto-sobre.jpg" alt="Fernanda Maraschin">
+            <span class="video-play-icon">▶</span>
+          </button>
+        </div>
       </div>
       <div class="about-text">
         <div class="section-eyebrow">Sobre Fernanda</div>
@@ -1318,35 +1339,35 @@
     <div class="transform-grid">
       <div class="transform-item">
         <img class="transform-photo" src="../assets/situacao-1.jpg" alt="Ansiedade e estresse constante" loading="lazy">
-        <div class="transform-body"><span class="transform-emoji">😰</span><div class="transform-label">Ansiedade e estresse constante</div><p class="transform-example">Aquele aperto no peito e a mente acelerada, mesmo sem um motivo claro.</p></div>
+        <div class="transform-body"><div class="transform-label">Ansiedade e estresse constante</div><p class="transform-example">Aquele aperto no peito e a mente acelerada, mesmo sem um motivo claro.</p></div>
       </div>
       <div class="transform-item">
         <img class="transform-photo" src="../assets/situacao-2.jpg" alt="Insônia e cansaço emocional" loading="lazy">
-        <div class="transform-body"><span class="transform-emoji">😴</span><div class="transform-label">Insônia e cansaço emocional</div><p class="transform-example">Noites mal dormidas e a sensação de acordar já exausta.</p></div>
+        <div class="transform-body"><div class="transform-label">Insônia e cansaço emocional</div><p class="transform-example">Noites mal dormidas e a sensação de acordar já exausta.</p></div>
       </div>
       <div class="transform-item">
         <img class="transform-photo" src="../assets/situacao-3.jpg" alt="Procrastinação e autossabotagem" loading="lazy">
-        <div class="transform-body"><span class="transform-emoji">🔁</span><div class="transform-label">Procrastinação e autossabotagem</div><p class="transform-example">Adiar o que importa e se boicotar justo quando está perto de conseguir.</p></div>
+        <div class="transform-body"><div class="transform-label">Procrastinação e autossabotagem</div><p class="transform-example">Adiar o que importa e se boicotar justo quando está perto de conseguir.</p></div>
       </div>
       <div class="transform-item">
         <img class="transform-photo" src="../assets/situacao-4.jpg" alt="Baixa autoestima" loading="lazy">
-        <div class="transform-body"><span class="transform-emoji">💔</span><div class="transform-label">Baixa autoestima</div><p class="transform-example">Sentir que nunca é boa o suficiente e duvidar do próprio valor.</p></div>
+        <div class="transform-body"><div class="transform-label">Baixa autoestima</div><p class="transform-example">Sentir que nunca é boa o suficiente e duvidar do próprio valor.</p></div>
       </div>
       <div class="transform-item">
         <img class="transform-photo" src="../assets/situacao-5.jpg" alt="Excesso de pensamentos" loading="lazy">
-        <div class="transform-body"><span class="transform-emoji">🌀</span><div class="transform-label">Excesso de pensamentos</div><p class="transform-example">A cabeça que não desliga, remoendo o passado e antecipando o futuro.</p></div>
+        <div class="transform-body"><div class="transform-label">Excesso de pensamentos</div><p class="transform-example">A cabeça que não desliga, remoendo o passado e antecipando o futuro.</p></div>
       </div>
       <div class="transform-item">
         <img class="transform-photo" src="../assets/situacao-6.jpg" alt="Dificuldades nos relacionamentos" loading="lazy">
-        <div class="transform-body"><span class="transform-emoji">👥</span><div class="transform-label">Dificuldades nos relacionamentos</div><p class="transform-example">Padrões que se repetem no amor, na família ou no trabalho.</p></div>
+        <div class="transform-body"><div class="transform-label">Dificuldades nos relacionamentos</div><p class="transform-example">Padrões que se repetem no amor, na família ou no trabalho.</p></div>
       </div>
       <div class="transform-item">
         <img class="transform-photo" src="../assets/situacao-7.jpg" alt="Falta de propósito" loading="lazy">
-        <div class="transform-body"><span class="transform-emoji">🧭</span><div class="transform-label">Falta de propósito</div><p class="transform-example">A sensação de estar perdida, sem saber qual caminho seguir.</p></div>
+        <div class="transform-body"><div class="transform-label">Falta de propósito</div><p class="transform-example">A sensação de estar perdida, sem saber qual caminho seguir.</p></div>
       </div>
       <div class="transform-item">
         <img class="transform-photo" src="../assets/situacao-8.jpg" alt="Relação difícil com o corpo" loading="lazy">
-        <div class="transform-body"><span class="transform-emoji">⚖️</span><div class="transform-label">Relação difícil com o corpo</div><p class="transform-example">Compulsão, dietas que não param de pé e a briga constante com a balança.</p></div>
+        <div class="transform-body"><div class="transform-label">Relação difícil com o corpo</div><p class="transform-example">Compulsão, dietas que não param de pé e a briga constante com a balança.</p></div>
       </div>
     </div>
   </div>
@@ -1698,6 +1719,19 @@
       sec.insertBefore(sfx, sec.firstChild);
     });
   }
+
+  // ── Vídeo de apresentação: clicar na capa (foto) inicia o vídeo ──
+  (function(){
+    var wrap = document.getElementById('apresVideo');
+    if (!wrap) return;
+    var vid = wrap.querySelector('video');
+    var cover = wrap.querySelector('.video-cover');
+    cover.addEventListener('click', function(){
+      vid.setAttribute('controls', '');
+      cover.style.display = 'none';
+      vid.play();
+    });
+  })();
 </script>
 </body>
 </html>
