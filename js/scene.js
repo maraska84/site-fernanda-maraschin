@@ -58,6 +58,16 @@ export function initExperience() {
   const figure = createFigure();
   scene.add(figure.mesh);
 
+  // ─── Parallax do mouse: o cérebro segue o cursor (desktop) ───
+  const mouse = { x: 0, y: 0 };
+  const mouseSmooth = { x: 0, y: 0 };
+  if (!isMobile) {
+    window.addEventListener('pointermove', (e) => {
+      mouse.x = (e.clientX / window.innerWidth) * 2 - 1;   // -1 (esq) .. 1 (dir)
+      mouse.y = (e.clientY / window.innerHeight) * 2 - 1;  // -1 (topo) .. 1 (base)
+    }, { passive: true });
+  }
+
   // ─── Pós-processamento: Bloom ───
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
@@ -144,10 +154,16 @@ export function initExperience() {
       particles.uniforms.uTime.value = t;
       // A rotação "acalma" conforme chega ao fim: no 100% o cérebro fica de
       // FRENTE, com a divisão dos hemisférios centralizada na tela.
+      // Suaviza a posição do mouse (segue com um leve atraso elegante).
+      mouseSmooth.x += (mouse.x - mouseSmooth.x) * 0.05;
+      mouseSmooth.y += (mouse.y - mouseSmooth.y) * 0.05;
+
       const calm = 1.0 - smoothProgress;
-      group.rotation.y = Math.sin(t * 0.15) * 0.30 * calm;
-      group.rotation.x = Math.sin(t * 0.10) * 0.05 * calm;
-      particles.points.rotation.y = -t * 0.02;
+      // O parallax do mouse reduz no clímax pra divisão final ficar centralizada.
+      const tilt = 0.45 + 0.55 * calm;
+      group.rotation.y = Math.sin(t * 0.15) * 0.28 * calm + mouseSmooth.x * 0.45 * tilt;
+      group.rotation.x = Math.sin(t * 0.10) * 0.05 * calm + mouseSmooth.y * 0.30 * tilt;
+      particles.points.rotation.y = -t * 0.02 + mouseSmooth.x * 0.06;
     }
 
     composer.render();
