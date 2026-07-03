@@ -1,0 +1,170 @@
+/* brain.css — estilo da experiência imersiva */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:ital@1&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+body {
+  background: #0A0E1A;
+  color: #fff;
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Canvas WebGL fixo no fundo, cobrindo a tela toda. */
+#webgl {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 0;
+}
+
+/* Container alto: é ele que gera o scroll (progresso 0→1). */
+#experience {
+  position: relative;
+  z-index: 1;
+}
+
+/* Cada etapa ocupa 120vh → 5 etapas = 600vh de scroll. */
+.stage {
+  height: 120vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 24px;
+  pointer-events: none; /* deixa o scroll/3D passar; só CTA e voltar clicáveis */
+}
+.stage-inner { max-width: 680px; }
+
+.stage .eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #C9A25C;
+  margin-bottom: 18px;
+}
+.stage h1 {
+  font-size: clamp(2.4rem, 9vw, 5rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+.stage h2 {
+  font-size: clamp(1.7rem, 6vw, 3.2rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+.stage em {
+  font-style: normal;
+  background: linear-gradient(90deg, #C9A25C, #E8CE93, #7FA8C9);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.stage p {
+  margin-top: 16px;
+  color: #b9b9c9;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.6;
+}
+
+.cta {
+  pointer-events: auto;
+  display: inline-block;
+  margin-top: 32px;
+  padding: 16px 32px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #C9A25C, #E8CE93);
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 0 44px rgba(201, 162, 92, 0.55);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cta:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(255, 0, 255, 0.6); }
+.back {
+  pointer-events: auto;
+  display: block;
+  margin-top: 22px;
+  color: #8a8a9a;
+  text-decoration: none;
+  font-size: 0.85rem;
+}
+.back:hover { color: #7FA8C9; }
+
+.scroll-hint {
+  margin-top: 44px;
+  font-size: 1.5rem;
+  color: #C9A25C;
+  animation: bounce 1.8s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.6; }
+  50%      { transform: translateY(10px); opacity: 1; }
+}
+
+/* Loader inicial */
+#loader {
+  position: fixed;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0A0E1A;
+  color: #C9A25C;
+  letter-spacing: 0.12em;
+  font-size: 0.9rem;
+  transition: opacity 0.6s ease;
+}
+#loader.hidden { opacity: 0; pointer-events: none; }
+
+/* Última etapa: texto na parte de baixo da tela (silhueta fica visível acima). */
+.stage:last-child { align-items: flex-end; padding-bottom: 7vh; }
+
+/* Atalho fixo "Ir para o site" */
+#skip {
+  position: fixed;
+  top: 20px; right: 22px;
+  z-index: 6;
+  color: #b9b9c9;
+  text-decoration: none;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  padding: 9px 16px;
+  border: 1px solid rgba(201, 162, 92, 0.45);
+  border-radius: 999px;
+  background: rgba(10, 14, 26, 0.4);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+#skip:hover { color: #fff; border-color: #C9A25C; background: rgba(201, 162, 92, 0.2); }
+
+/* Botão flutuante de música de fundo */
+#bgm-toggle {
+  position: fixed;
+  left: 20px; bottom: 20px;
+  z-index: 6;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(201, 162, 92, 0.5);
+  background: rgba(10, 14, 26, 0.5);
+  color: #fff;
+  font-size: 1.1rem;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: transform 0.2s, border-color 0.2s;
+}
+#bgm-toggle:hover { transform: scale(1.08); border-color: #C9A25C; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .scroll-hint { animation: none; }
+}
