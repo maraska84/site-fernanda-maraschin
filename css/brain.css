@@ -5,7 +5,7 @@
 
 html { scroll-behavior: smooth; }
 body {
-  background: #050505;
+  background: #0A0E1A;
   color: #fff;
   font-family: 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
@@ -44,7 +44,7 @@ body {
   font-size: 0.7rem;
   letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: #a855f7;
+  color: #C9A25C;
   margin-bottom: 18px;
 }
 .stage h1 {
@@ -60,7 +60,7 @@ body {
 }
 .stage em {
   font-style: normal;
-  background: linear-gradient(90deg, #a855f7, #ff00ff, #00d4ff);
+  background: linear-gradient(90deg, #C9A25C, #E8CE93, #7FA8C9);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -78,12 +78,12 @@ body {
   margin-top: 32px;
   padding: 16px 32px;
   border-radius: 999px;
-  background: linear-gradient(90deg, #a855f7, #ff00ff);
+  background: linear-gradient(90deg, #C9A25C, #E8CE93);
   color: #fff;
   text-decoration: none;
   font-weight: 600;
   letter-spacing: 0.02em;
-  box-shadow: 0 0 44px rgba(168, 85, 247, 0.55);
+  box-shadow: 0 0 44px rgba(201, 162, 92, 0.55);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 .cta:hover { transform: translateY(-2px); box-shadow: 0 0 60px rgba(255, 0, 255, 0.6); }
@@ -95,12 +95,12 @@ body {
   text-decoration: none;
   font-size: 0.85rem;
 }
-.back:hover { color: #00d4ff; }
+.back:hover { color: #7FA8C9; }
 
 .scroll-hint {
   margin-top: 44px;
   font-size: 1.5rem;
-  color: #a855f7;
+  color: #C9A25C;
   animation: bounce 1.8s infinite;
 }
 @keyframes bounce {
@@ -116,8 +116,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #050505;
-  color: #a855f7;
+  background: #0A0E1A;
+  color: #C9A25C;
   letter-spacing: 0.12em;
   font-size: 0.9rem;
   transition: opacity 0.6s ease;
@@ -137,14 +137,14 @@ body {
   font-size: 0.8rem;
   letter-spacing: 0.05em;
   padding: 9px 16px;
-  border: 1px solid rgba(168, 85, 247, 0.45);
+  border: 1px solid rgba(201, 162, 92, 0.45);
   border-radius: 999px;
-  background: rgba(5, 5, 5, 0.4);
+  background: rgba(10, 14, 26, 0.4);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   transition: color 0.2s, border-color 0.2s, background 0.2s;
 }
-#skip:hover { color: #fff; border-color: #a855f7; background: rgba(168, 85, 247, 0.2); }
+#skip:hover { color: #fff; border-color: #C9A25C; background: rgba(201, 162, 92, 0.2); }
 
 /* Botão flutuante de música de fundo */
 #bgm-toggle {
@@ -153,8 +153,8 @@ body {
   z-index: 6;
   width: 46px; height: 46px;
   border-radius: 50%;
-  border: 1px solid rgba(168, 85, 247, 0.5);
-  background: rgba(5, 5, 5, 0.5);
+  border: 1px solid rgba(201, 162, 92, 0.5);
+  background: rgba(10, 14, 26, 0.5);
   color: #fff;
   font-size: 1.1rem;
   cursor: pointer;
@@ -162,7 +162,7 @@ body {
   backdrop-filter: blur(6px);
   transition: transform 0.2s, border-color 0.2s;
 }
-#bgm-toggle:hover { transform: scale(1.08); border-color: #a855f7; }
+#bgm-toggle:hover { transform: scale(1.08); border-color: #C9A25C; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

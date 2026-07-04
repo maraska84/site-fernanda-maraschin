@@ -42,7 +42,7 @@ export function initExperience() {
   });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(PIXEL_RATIO);
-  renderer.setClearColor(0x050505, 1);
+  renderer.setClearColor(0x0A0E1A, 1);
   renderer.toneMapping = THREE.ACESFilmicToneMapping; // roll-off de brilho (não estoura)
   renderer.toneMappingExposure = 1.05;
 
@@ -104,7 +104,7 @@ export function initExperience() {
   // ─────────────────────────────────────────────────────────────────────────
   function applyProgress(progress) {
     // Bloom e câmera funcionam mesmo antes do cérebro carregar.
-    bloom.strength = 0.35 + 0.65 * progress;
+    bloom.strength = 0.28 + 0.38 * progress;
     bloom.radius   = 0.65 + 0.25 * progress;
     camera.position.z = 6.0 - 1.8 * progress;
     camera.position.y = Math.sin(progress * Math.PI) * 0.4;
@@ -121,13 +121,13 @@ export function initExperience() {
     // Cérebro
     brain.uniforms.uOpen.value       = progress;
     brain.uniforms.uGap.value        = GAP;
-    brain.uniforms.uBrightness.value = 0.45 + 0.5 * progress;
+    brain.uniforms.uBrightness.value = 0.34 + 0.36 * progress;
     brain.uniforms.uPulse.value      = 1.0 + 4.0 * progress;
     // Conexões
     neurons.uniforms.uProgress.value   = progress;
     neurons.uniforms.uOpen.value       = progress;
     neurons.uniforms.uGap.value        = GAP;
-    neurons.uniforms.uBrightness.value = 0.6 + 0.6 * progress;
+    neurons.uniforms.uBrightness.value = 0.5 + 0.45 * progress;
     // Partículas
     particles.uniforms.uProgress.value = progress;
   }

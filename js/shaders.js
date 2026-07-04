@@ -62,7 +62,7 @@ export const brainFragmentShader = /* glsl */`
     if (d > 0.5) discard;
     float alpha = smoothstep(0.5, 0.0, d);
 
-    vec3 color = vColor * vTwinkle * 1.2;
+    vec3 color = vColor * vTwinkle * 1.05;
     color *= (1.0 - 0.30 * vFog);   // escurece ao fundo (névoa mais sutil = cérebro mais aparente)
     gl_FragColor = vec4(color, alpha);
   }

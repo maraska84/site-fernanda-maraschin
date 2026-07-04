@@ -44,7 +44,7 @@ export function createFigure() {
     uMap:    { value: makeFallbackTexture() },           // começa com o fallback
     uReveal: { value: 0 },
     uTime:   { value: 0 },
-    uColor:  { value: new THREE.Color(1.0, 0.96, 1.0) },
+    uColor:  { value: new THREE.Color(1.0, 0.95, 0.85) },
   };
 
   // Tenta carregar a silhueta real do usuário; se existir, substitui a textura.

@@ -8,9 +8,9 @@ import * as THREE from 'three';
 import { particleVertexShader, particleFragmentShader } from './shaders.js';
 
 const PALETTE = [
-  new THREE.Color('#a855f7'),
-  new THREE.Color('#ff00ff'),
-  new THREE.Color('#00d4ff'),
+  new THREE.Color('#C9A25C'),
+  new THREE.Color('#E8CE93'),
+  new THREE.Color('#7FA8C9'),
 ];
 
 export function createParticles(count, isMobile) {

@@ -10,9 +10,9 @@ import { brainVertexShader, brainFragmentShader } from './shaders.js';
 
 // Paleta do projeto.
 const PALETTE = [
-  new THREE.Color('#a855f7'), // roxo
-  new THREE.Color('#ff00ff'), // magenta
-  new THREE.Color('#00d4ff'), // azul elétrico
+  new THREE.Color('#C9A25C'), // roxo
+  new THREE.Color('#E8CE93'), // magenta
+  new THREE.Color('#7FA8C9'), // azul elétrico
 ];
 
 // Ruído barato baseado em senos — suficiente para simular "rugas" (gyri/sulci).
