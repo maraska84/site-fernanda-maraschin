@@ -29,6 +29,9 @@ HTML, CSS e JavaScript puros, sem dependências externas. Hospedado gratuitament
 
 - **WhatsApp:** (51) 99399-6196
 - **Instagram:** [@femaraschin](https://www.instagram.com/femaraschin/)
+- **TikTok:** [@femaraschin.terapeuta](https://www.tiktok.com/@femaraschin.terapeuta)
+- **YouTube:** [@femaraschin](https://www.youtube.com/@femaraschin)
+- **Facebook:** [/femaraschin](https://www.facebook.com/femaraschin)
 
 ---
 
