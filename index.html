@@ -860,6 +860,45 @@
     .grc-btn { flex: 0 0 auto; }
   }
 
+  /* Carrossel de avaliações do Google */
+  .reviews-carousel {
+    max-width: 620px;
+    margin: 40px auto 0;
+    padding: 28px 24px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--deep);
+    text-align: center;
+    position: relative;
+  }
+  .reviews-carousel-content { min-height: 320px; display: flex; flex-direction: column; justify-content: space-between; }
+  .reviews-carousel-header { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 16px; }
+  .reviews-carousel-stars { display: flex; gap: 3px; }
+  .reviews-carousel-stars svg { width: 18px; height: 18px; fill: var(--gold); }
+  .reviews-carousel-meta { font-size: 0.85rem; color: var(--gray); }
+  .reviews-carousel-meta strong { color: var(--gold); }
+  .reviews-carousel-text { font-size: 0.95rem; line-height: 1.6; color: var(--light); margin: 16px 0; text-align: left; font-style: italic; }
+  .reviews-carousel-author { font-size: 0.85rem; color: var(--gray-light); margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,215,0,0.1); }
+  .reviews-carousel-author strong { color: var(--gray-light); }
+  .reviews-carousel-nav { display: flex; gap: 12px; justify-content: center; margin-top: 20px; }
+  .reviews-carousel-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--border); background: transparent;
+    color: var(--gold); cursor: pointer; font-size: 0.9rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .reviews-carousel-btn:hover { background: rgba(255,215,0,0.1); }
+  .reviews-carousel-btn:active { transform: scale(0.95); }
+  .reviews-carousel-dots { display: flex; gap: 6px; justify-content: center; }
+  .reviews-carousel-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,215,0,0.3); cursor: pointer; transition: all 0.2s;
+  }
+  .reviews-carousel-dot.active { background: var(--gold); width: 24px; border-radius: 4px; }
+
+  .hidden { display: none !important; }
+
   .testimonials-dots {
     display: flex;
     gap: 8px;
@@ -1606,28 +1645,56 @@
 </section>
 
 <!-- ============================================================
-     Avaliações verificadas no Google.
-     RESERVADO para o futuro: quando houver mais avaliações, este
-     cartão pode ser substituído por um widget completo (Elfsight /
-     Trustindex / etc.) que puxa e exibe as avaliações automaticamente.
+     Avaliações verificadas no Google — Carrossel
      ============================================================ -->
 <section id="avaliacoes-google">
   <div class="container">
-    <div class="google-reviews-card">
-      <div class="grc-stars" aria-hidden="true">
-        <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7-5.4-4.7 7.1-.6z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7-5.4-4.7 7.1-.6z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7-5.4-4.7 7.1-.6z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7-5.4-4.7 7.1-.6z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7-5.4-4.7 7.1-.6z"/></svg>
+    <div class="reviews-carousel">
+      <div class="reviews-carousel-content">
+        <div>
+          <div class="reviews-carousel-header">
+            <div class="reviews-carousel-stars" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7-5.4-4.7 7.1-.6z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7-5.4-4.7 7.1-.6z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7-5.4-4.7 7.1-.6z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7-5.4-4.7 7.1-.6z"/></svg>
+              <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7-5.4-4.7 7.1-.6z"/></svg>
+            </div>
+          </div>
+          <p class="reviews-carousel-meta"><strong>5,0</strong> · Google</p>
+          <p class="reviews-carousel-text" data-review="0">Tive a oportunidade de vivenciar algumas técnicas da Fernanda em alguns momentos. Nossas conversas sempre me trouxeram reflexões importantes e mudanças de perspectiva. Também experimentei técnicas de relaxamento que me ajudaram bastante. É uma profissional competenta, que investe constantemente em estudos e se dedica naquilo que faz. Recomendo o trabalho com confiança.</p>
+          <p class="reviews-carousel-text hidden" data-review="1">A Fernanda é maravilhosa. Me consentou! Profissional séria, competente e comprometida com o que faz. Se tivessem 10 estrelas aqui, eu usaria todas!</p>
+          <p class="reviews-carousel-text hidden" data-review="2">Minha experiência com a Fé já vém de alguns anos, já ressignifiquei muita coisa ali delitado no divã com ela, já fui a N lugares com nossas sessões e estar ali dentro de mim e acolhendo a minha criança é algo impressionante! Obrigado Fé por esta profissional maravilhosa que você é! Muito agradeci</p>
+          <p class="reviews-carousel-text hidden" data-review="3">Sou paciente da Fernanda há anos e só tenho gratidão pelo trabalho dela. É uma profissional extremamente dedicada, acolhedora e competente. A hipnose me ajudou em diversos momentos da minha vida, trazendo mais autoconhecimento, equilíbrio...</p>
+          <p class="reviews-carousel-text hidden" data-review="4">Gostaria de deixar meu depoimento e dizer que a Fernanda é uma excelente profissional, atenciosa e muito responsável. Tem me ajudado muito na área das emoções profissionalmente.</p>
+          <p class="reviews-carousel-text hidden" data-review="5">Consegui perder minha vergonha de fazer vídeos nas redes sociais depois de fazer hipnoterapia. Também tinha muita ansiedade, que reduziu bastante. Sou suspeita, pois é minha irmã, mas confio de olhos fechados!</p>
+        </div>
+        <div class="reviews-carousel-author">
+          <strong data-author="0">Marcelo Viero</strong>
+          <strong data-author="1" class="hidden">Orlando Junior</strong>
+          <strong data-author="2" class="hidden">Leonel Thomas Bosa</strong>
+          <strong data-author="3" class="hidden">Fabiana Furlan</strong>
+          <strong data-author="4" class="hidden">Aline Bergmann</strong>
+          <strong data-author="5" class="hidden">Mariana Maraschin</strong>
+        </div>
       </div>
-      <p class="grc-rating"><strong>5,0</strong> · avaliações verificadas no Google</p>
-      <div class="grc-actions">
+      <div class="reviews-carousel-nav">
+        <button class="reviews-carousel-btn" id="reviews-prev">←</button>
+        <div class="reviews-carousel-dots">
+          <div class="reviews-carousel-dot active" data-idx="0"></div>
+          <div class="reviews-carousel-dot" data-idx="1"></div>
+          <div class="reviews-carousel-dot" data-idx="2"></div>
+          <div class="reviews-carousel-dot" data-idx="3"></div>
+          <div class="reviews-carousel-dot" data-idx="4"></div>
+          <div class="reviews-carousel-dot" data-idx="5"></div>
+        </div>
+        <button class="reviews-carousel-btn" id="reviews-next">→</button>
+      </div>
+      <div style="text-align: center; margin-top: 20px;">
         <a class="grc-btn grc-btn-primary" href="https://maps.app.goo.gl/CxG4QbS2K7A9B3hT7" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8L5.8 21l1.6-7-5.4-4.7 7.1-.6z"/></svg>
           Deixar uma avaliação
         </a>
-        <a class="grc-btn grc-btn-secondary" href="https://maps.app.goo.gl/CxG4QbS2K7A9B3hT7" target="_blank" rel="noopener">Ver perfil no Google →</a>
       </div>
     </div>
   </div>
@@ -1935,6 +2002,29 @@
       vid.setAttribute('controls', '');
       cover.style.display = 'none';
       vid.play();
+    });
+  })();
+
+  /* Carrossel de avaliações */
+  (() => {
+    let currentIdx = 0;
+    const reviews = document.querySelectorAll('[data-review]');
+    const authors = document.querySelectorAll('[data-author]');
+    const dots = document.querySelectorAll('.reviews-carousel-dot');
+    const prevBtn = document.getElementById('reviews-prev');
+    const nextBtn = document.getElementById('reviews-next');
+
+    function showReview(idx) {
+      reviews.forEach((r, i) => r.classList.toggle('hidden', i !== idx));
+      authors.forEach((a, i) => a.classList.toggle('hidden', i !== idx));
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      currentIdx = idx;
+    }
+
+    prevBtn?.addEventListener('click', () => showReview((currentIdx - 1 + reviews.length) % reviews.length));
+    nextBtn?.addEventListener('click', () => showReview((currentIdx + 1) % reviews.length));
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => showReview(parseInt(dot.dataset.idx, 10)));
     });
   })();
 </script>
