@@ -786,8 +786,6 @@
   }
   .step-desc { font-size: 0.875rem; color: var(--gray); line-height: 1.75; }
 
-  /* ── DEPOIMENTOS ── */
-  #depoimentos { background: linear-gradient(180deg, var(--deep) 0%, var(--black) 100%); }
 
   /* horizontal scroll carousel on mobile */
   .testimonials-scroll {
@@ -1348,7 +1346,6 @@
   <a href="#sobre" class="mob-link">Sobre Fernanda</a>
   <a href="#servicos" class="mob-link">Terapias & Serviços</a>
   <a href="#processo" class="mob-link">Como Funciona</a>
-  <a href="#depoimentos" class="mob-link">Depoimentos</a>
   <a href="perfil/artigos/" class="mob-link">Artigos</a>
   <a href="#faq" class="mob-link">Perguntas Frequentes</a>
   <a href="https://www.instagram.com/femaraschin/" class="mob-link" target="_blank" rel="noopener">Instagram @femaraschin</a>
@@ -1611,39 +1608,6 @@
   </div>
 </section>
 
-<!-- DEPOIMENTOS -->
-<section id="depoimentos">
-  <div class="container">
-    <div class="section-eyebrow">Depoimentos</div>
-    <h2 class="section-title">Experiências de quem já<br><em>iniciou a jornada</em></h2>
-    <div class="testimonials-scroll" id="testimonialsScroll">
-      <div class="testimonial-card">
-        <div class="testimonial-quote">"</div>
-        <p class="testimonial-text">Fernanda, muito obrigada por essa regressão de vidas passadas da minha infância! Muitas portas de sofrimento, angústia e tristeza foram fechadas. Obrigada por esse trabalho incrível que tu tá fazendo por nós que te procuramos. Meu coração agora é só gratidão!</p>
-        <div class="testimonial-author">Mariana R.</div>
-        <div class="testimonial-city">Porto Alegre/RS</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-quote">"</div>
-        <p class="testimonial-text">É incrível como me sinto em paz — algo que antes era bem mais difícil. Os pensamentos negativos praticamente sumiram, e quando vem algum, é fraco e eu logo identifico a causa. Sigo em paz com o processo.</p>
-        <div class="testimonial-author">Rafael M.</div>
-        <div class="testimonial-city">Novo Hamburgo/RS</div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-quote">"</div>
-        <p class="testimonial-text">Passando pra te contar o quanto estou feliz e tranquila desde a última sessão! Parece que nada mais vai me abalar — e tenho certeza que não vai. Obrigada por abrir meus olhos para a vida. Estou conseguindo lidar com meus sentimentos de um jeito que nunca imaginei ser capaz. Gratidão!</p>
-        <div class="testimonial-author">Juliana S.</div>
-        <div class="testimonial-city">Atendimento online</div>
-      </div>
-    </div>
-    <div class="testimonials-dots" id="testimonialsDots">
-      <div class="t-dot active" data-i="0"></div>
-      <div class="t-dot" data-i="1"></div>
-      <div class="t-dot" data-i="2"></div>
-    </div>
-  </div>
-</section>
-
 <!-- ============================================================
      Avaliações verificadas no Google — Carrossel
      ============================================================ -->
@@ -1856,26 +1820,6 @@
     });
   });
 
-  // ── Testimonials dots (mobile carousel) ──
-  const scroll = document.getElementById('testimonialsScroll');
-  const dots = document.querySelectorAll('.t-dot');
-
-  if (scroll && dots.length) {
-    // Scroll → dot sync
-    scroll.addEventListener('scroll', () => {
-      const idx = Math.round(scroll.scrollLeft / scroll.clientWidth);
-      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
-    }, { passive: true });
-
-    // Dot → scroll
-    dots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        const i = parseInt(dot.dataset.i);
-        scroll.scrollTo({ left: i * scroll.clientWidth, behavior: 'smooth' });
-      });
-    });
-  }
-
   // ── Barra de progresso de rolagem ──
   const progressBar = document.getElementById('scrollProgress');
   let progressTicking = false;
@@ -1899,7 +1843,6 @@
       '#servicos .section-eyebrow', '#servicos .section-title', '#servicos .service-card',
       '#transformacao .section-eyebrow', '#transformacao .section-title', '#transformacao .transform-item',
       '#processo .section-eyebrow', '#processo .section-title', '#processo .process-step',
-      '#depoimentos .section-eyebrow', '#depoimentos .section-title', '#depoimentos .testimonial-card',
       '#online .online-content', '#online .contact-card',
       '#faq .section-eyebrow', '#faq .section-title', '#faq .faq-item',
       '#contato .section-eyebrow', '#contato .cta-title', '#contato .cta-subtitle', '#contato .cta-actions', '#contato .cta-note'
@@ -1908,7 +1851,7 @@
     revealEls.forEach(el => el.classList.add('reveal'));
 
     // escalonamento (stagger) nos grupos de cards
-    ['#servicos .service-card', '#transformacao .transform-item', '#depoimentos .testimonial-card', '#faq .faq-item', '#processo .process-step']
+    ['#servicos .service-card', '#transformacao .transform-item', '#faq .faq-item', '#processo .process-step']
       .forEach(sel => {
         document.querySelectorAll(sel).forEach((el, i) => {
           el.style.transitionDelay = ((i % 6) * 70) + 'ms';
@@ -1943,7 +1886,7 @@
         }
       });
     }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
-    ['sobre', 'servicos', 'processo', 'depoimentos', 'faq'].forEach(id => {
+    ['sobre', 'servicos', 'processo', 'faq'].forEach(id => {
       const s = document.getElementById(id);
       if (s) spy.observe(s);
     });
