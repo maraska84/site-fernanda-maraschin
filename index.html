@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Fernanda Maraschin - Hipnoterapeuta e Mestre Reiki Nível 3A. Hipnose clínica, Reiki e PNL para ansiedade, insônia e padrões que travam. Presencial em Porto Alegre e Florianópolis, online para todo o Brasil e o mundo.">
+<meta name="description" content="Hipnoterapeuta e Mestre Reiki 3A. Hipnose clínica, Reiki e PNL para ansiedade, insônia e padrões que travam. Atendimento em Porto Alegre e online.">
 <meta name="keywords" content="hipnoterapeuta Porto Alegre, hipnose clínica Porto Alegre, Reiki Porto Alegre, PNL, terapia para ansiedade, reprogramação mental, atendimento online, hipnoterapia RS">
 <meta name="theme-color" content="#F4F1EA">
 <meta name="author" content="Fernanda Maraschin">
@@ -33,32 +33,89 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "Fernanda Maraschin — Hipnoterapia, Reiki e PNL",
-  "description": "Hipnoterapeuta e Mestre Reiki Nível 3A. Hipnose clínica, Reiki e PNL, com atendimento presencial em Porto Alegre e Florianópolis e online para todo o Brasil e o mundo.",
-  "url": "https://femaraschin.com.br/",
-  "image": "https://femaraschin.com.br/perfil/foto-hero.jpg",
-  "telephone": "+5551993996196",
-  "priceRange": "$$",
-  "address": { "@type": "PostalAddress", "addressLocality": "Porto Alegre", "addressRegion": "RS", "addressCountry": "BR" },
-  "geo": { "@type": "GeoCoordinates", "latitude": -30.0346, "longitude": -51.2177 },
-  "areaServed": [
-    { "@type": "City", "name": "Porto Alegre" },
-    { "@type": "City", "name": "Florianópolis" },
-    { "@type": "State", "name": "Rio Grande do Sul" },
-    { "@type": "State", "name": "Santa Catarina" },
-    { "@type": "Country", "name": "Brasil" }
-  ],
-  "availableLanguage": "pt-BR",
-  "sameAs": [
-    "https://www.instagram.com/femaraschin/",
-    "https://www.tiktok.com/@femaraschin.terapeuta",
-    "https://www.youtube.com/@femaraschin",
-    "https://www.facebook.com/femaraschin",
-    "https://wa.me/5551993996196"
-  ],
-  "founder": { "@type": "Person", "name": "Fernanda Maraschin", "jobTitle": "Hipnoterapeuta e Mestre Reiki 3A" },
-  "knowsAbout": ["Hipnoterapia", "Reiki", "Programação Neurolinguística", "PNL", "Auto-hipnose", "Ansiedade", "Insônia"]
+  "@graph": [
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://femaraschin.com.br/#negocio",
+      "name": "Fernanda Maraschin — Hipnoterapia, Reiki e PNL",
+      "description": "Hipnoterapeuta e Mestre Reiki Nível 3A. Hipnose clínica, Reiki e PNL para ansiedade, insônia e padrões que travam. Atendimento em Porto Alegre e online.",
+      "url": "https://femaraschin.com.br/",
+      "image": "https://femaraschin.com.br/perfil/foto-hero.jpg",
+      "telephone": "+5551993996196",
+      "priceRange": "$$",
+      "address": { "@type": "PostalAddress", "addressLocality": "Porto Alegre", "addressRegion": "RS", "addressCountry": "BR" },
+      "areaServed": [
+        { "@type": "City", "name": "Porto Alegre" },
+        { "@type": "City", "name": "Florianópolis" },
+        { "@type": "State", "name": "Rio Grande do Sul" },
+        { "@type": "State", "name": "Santa Catarina" },
+        { "@type": "Country", "name": "Brasil" }
+      ],
+      "availableLanguage": "pt-BR",
+      "sameAs": [
+        "https://www.instagram.com/femaraschin/",
+        "https://www.tiktok.com/@femaraschin.terapeuta",
+        "https://www.youtube.com/@femaraschin",
+        "https://www.facebook.com/femaraschin"
+      ],
+      "founder": { "@type": "Person", "name": "Fernanda Maraschin", "jobTitle": "Hipnoterapeuta e Mestre Reiki 3A" },
+      "knowsAbout": ["Hipnoterapia", "Reiki", "Programação Neurolinguística", "PNL", "Auto-hipnose", "Ansiedade", "Insônia"]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://femaraschin.com.br/#servico-hipnoterapia",
+      "name": "Hipnoterapia Clínica",
+      "serviceType": "Hipnoterapia clínica",
+      "description": "Acesso ao inconsciente para identificar e ressignificar crenças limitantes e comportamentos que sabotam a vida. Terapia complementar, não substitui acompanhamento médico ou psicológico.",
+      "provider": { "@id": "https://femaraschin.com.br/#negocio" },
+      "areaServed": [
+        { "@type": "City", "name": "Porto Alegre" },
+        { "@type": "City", "name": "Florianópolis" },
+        { "@type": "Country", "name": "Brasil" }
+      ],
+      "availableChannel": [
+        { "@type": "ServiceChannel", "name": "Presencial", "availableLanguage": "pt-BR" },
+        { "@type": "ServiceChannel", "name": "Online", "serviceUrl": "https://femaraschin.com.br/contato/", "availableLanguage": "pt-BR" }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://femaraschin.com.br/#servico-reiki",
+      "name": "Reiki Usui e Karuna (Nível 3A)",
+      "serviceType": "Reiki",
+      "description": "Prática de relaxamento e equilíbrio energético com Reiki Usui e Karuna, voltada à redução do estresse. Terapia complementar, não substitui tratamento de saúde.",
+      "provider": { "@id": "https://femaraschin.com.br/#negocio" },
+      "areaServed": [
+        { "@type": "City", "name": "Porto Alegre" },
+        { "@type": "City", "name": "Florianópolis" },
+        { "@type": "Country", "name": "Brasil" }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://femaraschin.com.br/#servico-pnl",
+      "name": "PNL — Programação Neurolinguística",
+      "serviceType": "Programação Neurolinguística",
+      "description": "Ferramentas práticas de PNL para trabalhar padrões de pensamento e comportamento, com formação internacional (Practitioner).",
+      "provider": { "@id": "https://femaraschin.com.br/#negocio" },
+      "areaServed": [
+        { "@type": "City", "name": "Porto Alegre" },
+        { "@type": "Country", "name": "Brasil" }
+      ]
+    },
+    {
+      "@type": "Service",
+      "@id": "https://femaraschin.com.br/#servico-emagrecimento",
+      "name": "Reprogramação para Emagrecimento",
+      "serviceType": "Hipnoterapia para emagrecimento",
+      "description": "Trabalha a relação emocional com a comida, gatilhos de compulsão e crenças que dificultam a mudança de hábitos. Não é tratamento para obesidade nem substitui acompanhamento nutricional ou médico.",
+      "provider": { "@id": "https://femaraschin.com.br/#negocio" },
+      "areaServed": [
+        { "@type": "City", "name": "Porto Alegre" },
+        { "@type": "Country", "name": "Brasil" }
+      ]
+    }
+  ]
 }
 </script>
 <script type="application/ld+json">
@@ -291,7 +348,9 @@
   .foot-links{display:flex;gap:24px;flex-wrap:wrap}
   .foot-links a{font-size:.9rem;color:#B9BFC6}
   .foot-links a:hover{color:#fff}
-  .foot-copy{font-size:.8rem;color:#7C838C;border-top:1px solid #333940;padding-top:22px;margin-top:10px}
+  .foot-aviso{font-size:.78rem;color:#8A9199;line-height:1.65;border-top:1px solid #333940;padding-top:22px;margin-top:10px;max-width:88ch}
+  .foot-aviso strong{color:#B9BFC6;font-weight:600}
+  .foot-copy{font-size:.8rem;color:#7C838C;padding-top:16px;margin-top:16px}
 
   /* ---------- WhatsApp FAB ---------- */
   .fab{position:fixed;bottom:22px;right:22px;z-index:60;width:56px;height:56px;border-radius:50%;background:var(--sage-deep);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(94,118,88,.4);transition:transform .18s}
@@ -352,6 +411,7 @@
       <a href="#processo">Como Funciona</a>
       <a href="perfil/artigos/">Artigos</a>
       <a href="#faq">FAQ</a>
+      <a href="/contato/">Contato</a>
       <div class="nav-social">
         <a href="https://www.instagram.com/femaraschin/" target="_blank" rel="noopener" aria-label="Instagram @femaraschin"><svg viewBox="0 0 24 24"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"/></svg></a>
         <a href="https://www.tiktok.com/@femaraschin.terapeuta" target="_blank" rel="noopener" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></a>
@@ -368,6 +428,7 @@
     <a href="#processo">Como Funciona</a>
     <a href="perfil/artigos/">Artigos</a>
     <a href="#faq">FAQ</a>
+    <a href="/contato/">Contato</a>
     <a href="https://www.instagram.com/femaraschin/" target="_blank" rel="noopener">Instagram</a>
     <a href="https://www.tiktok.com/@femaraschin.terapeuta" target="_blank" rel="noopener">TikTok</a>
     <a href="https://www.youtube.com/@femaraschin" target="_blank" rel="noopener">YouTube</a>
@@ -686,8 +747,12 @@
         <a href="#servicos">Terapias</a>
         <a href="perfil/artigos/">Artigos</a>
         <a href="#faq">FAQ</a>
+        <a href="/contato/">Contato</a>
         <a href="https://wa.me/5551993996196" target="_blank">WhatsApp</a>
       </div>
+    </div>
+    <div class="foot-aviso">
+      <strong>Aviso importante:</strong> hipnoterapia, Reiki e PNL são práticas complementares de bem-estar e autoconhecimento. Não são tratamento médico, psicológico ou psiquiátrico, não substituem acompanhamento profissional de saúde e não interrompem medicação prescrita. Os resultados variam de pessoa para pessoa e não há garantia de efeito. Se você enfrenta sofrimento intenso, procure um profissional de saúde. Em crise, ligue para o CVV: <a href="tel:188" style="color:#B9BFC6;text-decoration:underline">188</a> (gratuito, 24h).
     </div>
     <div class="foot-copy">© 2026 Fernanda Maraschin · Atendimento presencial em Porto Alegre e Florianópolis · online para todo o Brasil e o mundo</div>
   </div>
