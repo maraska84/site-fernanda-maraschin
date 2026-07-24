@@ -249,6 +249,14 @@ nav {
 .btn-whatsapp:active { transform: scale(0.98); }
 .btn-whatsapp svg { width: 20px; height: 20px; fill: currentColor; }
 
+/* ── FONTES E REFERÊNCIAS ── */
+.fontes { margin: 40px 0 8px; padding-top: 28px; border-top: 1px solid var(--line); }
+.fontes-title { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage-deep); font-weight: 600; margin-bottom: 16px; }
+.fontes ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.fontes li { font-size: 0.86rem; color: var(--ink-mute); line-height: 1.65; }
+.fontes li a { color: var(--sage-deep); text-decoration: underline; }
+.fontes li a:hover { color: var(--sage); }
+
 /* ── ARTIGOS RELACIONADOS ── */
 .related { margin: 48px 0 8px; }
 .related-title { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage-deep); font-weight: 600; margin-bottom: 18px; }
